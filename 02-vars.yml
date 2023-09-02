@@ -18,6 +18,7 @@
       vars:
         URL: task.example.com
 
+## vars_files can also be declared on task level
 - name: Declare variable in another file
   hosts: all
   connection: local
@@ -25,5 +26,23 @@
     - var.yml
   tasks:
     - name: Access Variable
+      ansible.builtin.debug:
+        msg: URL == {{URL}}
+
+- name: Declare variable at Tasks level
+  hosts: all
+  connection: local
+  tasks:
+    - name: Declare and access a variable
+      ansible.builtin.debug:
+        msg: url == {{URL}}
+      vars:
+        URL: task.example.com
+
+- name: Declare variable from inventory file
+  hosts: all
+  connection: local
+  tasks:
+    - name: Access variable
       ansible.builtin.debug:
         msg: URL == {{URL}}
